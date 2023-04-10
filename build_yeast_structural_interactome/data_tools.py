@@ -2,29 +2,6 @@ import pandas as pd
 import numpy as np
 import pickle
 
-def integrate_protein_interaction_data(InputList, IDMappingFile, OutPath): 
-    frames = []
-    for datasetPath in InputList: 
-        dataset = pd.read_csv(datasetPath, sep=' ')[['orf_name_a', 'orf_name_b']]
-        dataset['orf_name_a'], dataset['orf_name_b'] = dataset.min(axis=1), dataset.max(axis=1)
-        # Create a tag for each protein-protein interaction
-        # dataset['index'] = dataset.min(axis=1) + '_' + dataset.max(axis=1) 
-        frames.append(dataset)
-    output = pd.concat(frames)
-    output = output[output['orf_name_a'] != output['orf_name_b']]
-    IDMappingDict = {}
-    with open(IDMappingFile, 'r') as f:
-        lines = f.readlines()
-        for line in lines: 
-            columns = line.rstrip().split('\t')
-            if columns[1] == 'Gene_OrderedLocusName': 
-                IDMappingDict[columns[2]] = columns[0]
-    output = output[(output['orf_name_a'].isin(IDMappingDict.keys())) & (output['orf_name_b'].isin(IDMappingDict.keys()))]
-    output['orf_name_a'] = output['orf_name_a'].map(IDMappingDict)
-    output['orf_name_b'] = output['orf_name_b'].map(IDMappingDict)
-    output.columns = ['Protein_1', 'Protein_2']
-    output.to_csv(OutPath, sep='\t', index=False)
-
 def process_BIOGRID_protein_interactome(InPath, OutPath, species='cerevisiae'): 
     BIOGRID = pd.read_table(InPath)
     if species == 'cerevisiae': 
@@ -77,14 +54,8 @@ def generate_GI_matrix(InPath, OutPath):
     geneList.sort()
     zero_data = np.zeros(shape=(len(geneList), len(geneList)))
     GI_matrix = pd.DataFrame(zero_data, columns=geneList, index=geneList)
-    print(GI.columns)
     for index, row in GI.iterrows(): 
-        if row['GI'] < -0.08: 
-            GI_score = -1
-        elif row['GI'] > 0.08: 
-            GI_score = 1
-        else: 
-            GI_score = 0
+        GI_score = row['GI']
         GI_matrix.loc[row['query'], row['array']] = GI_score
         GI_matrix.loc[row['array'], row['query']] = GI_score
         if index % 10 == 0: 
@@ -122,20 +93,6 @@ def generate_essential_gene_list(OutPath):
     for row in query.rows():
         essentialGeneList.append(row["genes.secondaryIdentifier"])
     pickle.dump(essentialGeneList, open(OutPath, 'wb'))
-
-# def generate_gene_list(InPath, OutPath): 
-#     outputset = set()
-#     with open(InPath, 'r') as f: 
-#         f.readline()
-#         while True: 
-#             line = f.readline().strip().split('\t')
-#             if len(line) < 5: 
-#                 break
-#             gene_1 = line[0].split('_')[0]
-#             gene_2 = line[2].split('_')[0]
-#             outputset.add(gene_1)
-#             outputset.add(gene_2)
-#     pickle.dump(outputset, open(OutPath, 'wb'))
 
 def generate_GI_full_matrix(InPathList, OutPath): 
     # create an empty matrix to record genetic interaction scores
