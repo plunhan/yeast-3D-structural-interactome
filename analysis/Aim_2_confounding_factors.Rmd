@@ -351,6 +351,7 @@ ggsave('../../../figures/seqsim_local.svg', width = 10, height = 8, units = 'in'
 This section tests the effect of structural similarity of interactors on the negative correlation between GIPS and ORC. Specifically, this section is divided into two parts. We will sequentially investigate the effect of the followings: 1. The global structural similarity of whole interactors; 2. The structural similarity of interfaciali structural similarity of interactors.
 
 ## Part I
+
 ```{r global structural similarity}
 df_strsim <- read.table('confounding_structural_similarity.txt', header = 1)
 df_strsim <- na.omit(df_strsim)
@@ -439,6 +440,7 @@ ggsave('../../../figures/strsim_local.svg', width = 10, height = 12, units = 'in
 ```
 
 # Functions for plotting GO similarity
+
 ```{r functions for plotting GO similarity}
 plot_PCC_GO <- function(x, y) {
   model <- generate_wls(x)
@@ -516,6 +518,7 @@ generate_PCC_GO_cc <- function(x) {
 ```
 
 # Compare different functional similarity measurements
+
 ```{r compare functional similarity}
 # plot ORC vs. GO-based semantic similarity
 compare_functional_similarity_ORC <- read.table('overlapping_residue_count_vs_semetic_similarity.txt', header = 1)
@@ -629,43 +632,8 @@ ggplot(compare_functional_similarity, aes(x=ORC, y=mf)) +
   ylab('Semantic similarity (GO Molecular Function')
 ```
 
-# Degree (interfacial overlap) distribution and degree V.S. degree
-```{r degree}
-# Distribution of interfacial overlap
-compare_functional_similarity <- read.table('compare_functional_similarity.txt', header = 1)
-compare_functional_similarity <- na.omit(compare_functional_similarity)
-t <- table(compare_functional_similarity$index)
-t <- data.frame(t[t>=0])
-ggplot(t, aes(x=Freq)) + 
-  geom_histogram(aes(y=..density..), 
-                 binwidth = 1, 
-                 colour='black', fill='white') + 
-  xlab('The number of target proteins for a pair of proteins') + 
-  ylab('Density')
-ggsave('../../../figures/Hist_number_of_target_proteins.jpg')
-
-dist <- compare_functional_similarity[compare_functional_similarity$ORC >= 0,]
-length(dist[dist$ORC == 0,]$index)
-length(dist$index)
-
-ggplot(dist, aes(x=ORC)) + 
-  geom_histogram(aes(y=..density..), 
-                 binwidth = 1, 
-                 colour='black', fill='white') + 
-  xlab('Interfacial overlap') + 
-  ylab('Density')
-ggsave('../../../figures/Hist_interfacial_overlap.jpg')
-
-degree <- read.table('ORC_dist_for_redundant.txt', sep = '\t', header = 1, row.names = 1)
-cor.test(degree$ORC_1, degree$ORC_2)
-ggplot(data=degree, aes(x=ORC_1, y=ORC_2)) + 
-  geom_point() + 
-  xlab('Interfacial overlap 1') + 
-  ylab('Interfacial overlap 2')
-ggsave('../../../figures/degree_vs_degree.jpg')
-```
-
 # Plot the number table
+
 ```{r number}
 library(data.table)
 cells <- data.frame(stats_origin_binned, stats_e_hub_binned, stats_n_hub_binned, 
@@ -680,6 +648,7 @@ write.table(cells, file = "../../../figures/binned_numbers.txt", sep = '\t', quo
 ```
 
 # Plot genetic interaction profiles for case studies
+
 ```{r GIP}
 GIP1 <- read.table('~/Desktop/RealScience/data/processed/GIP_YDR334W_YML041C.txt', header=1)
 p1 <- ggplot(GIP1, aes(x=YML041C, y=YDR334W)) + 
