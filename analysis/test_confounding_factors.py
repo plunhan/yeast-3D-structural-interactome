@@ -2,7 +2,6 @@ import os
 import pandas as pd 
 import numpy as np 
 from pathlib import Path 
-from analysis_tools import count_degree_strInt
 from interface_tools import (degree_of_interface_overlap_vs_functional_similarity, 
                              binning_data, 
                              check_paralogs, 
@@ -95,11 +94,6 @@ def main():
     TempFile_1 = corDir / 'tempfile1.txt'
     TempFile_2 = corDir / 'tempfile2.txt'
     TMalign_file = corDir / 'TMscore.txt'
-
-
-    if not degreeStrInt.is_file():
-        print('Counting PPI degree for genes in the structural interactome...')
-        count_degree_strInt(structuralInteractome, degreeStrInt)
         
     # Probe the effect of possible confounding factors
 
