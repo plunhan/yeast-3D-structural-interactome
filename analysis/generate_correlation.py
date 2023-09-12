@@ -2,7 +2,7 @@ import os
 import pandas as pd 
 import numpy as np 
 from pathlib import Path 
-from analysis_tools import correlation_ORC_GIPS, correlation_ORC_SemSim
+from analysis_tools import count_degree_strInt, correlation_ORC_GIPS, correlation_ORC_SemSim
 
 def main():
 
@@ -24,11 +24,8 @@ def main():
     # parent directory of all processed data files
     procDir = dataDir / 'processed'
 
-    # parent directory of Aim 1 results (basic stats)
-    aim1Dir = procDir / 'aim_1'
-
     # parent directory of Aim 2 results (correlation and confounding factors)
-    aim2Dir = procDir / 'aim_2'
+    corDir = procDir / 'correlation'
 
     # directory of processed data files specific to interactome
     interactomeDir = procDir / interactome_name
@@ -42,22 +39,23 @@ def main():
     # input data files
     referenceInteractome = procDir / 'yeast_reference_interactome.txt'
     structuralInteractome = modelBasedDir / 'structural_interactome.txt'
-    degreeCountStrInt = aim1Dir / 'degree_count_structural_interactome.txt'
     IDMappingFile = extDir / 'YEAST_559292_idmapping.dat'
-    structuralInteractomeWithInteractingResidues = aim2Dir / 'interacting_residues.pkl'
-    geneticInteractionProfile_rel = procDir / 'sga_GI_rel_matrix.txt'
-    geneticInteractionProfile_all = procDir / 'sga_GI_full_matrix.txt'
+    geneticInteractionProfile_rel = procDir / 'sga_GI_rel_matrix.txt' # Change to full matrix if all genetic interactions are used
     semSimBP = semSimDir / 'fastsemsim_output_refPPIs_bp_SimGIC'
     semSimMF = semSimDir / 'fastsemsim_output_refPPIs_mf_SimGIC'
     semSimCC = semSimDir / 'fastsemsim_output_refPPIs_cc_SimGIC'
 
     # output data files
+    degreeCountStrInt = corDir / 'degree_count_structural_interactome.txt'
+    corOverlapResCountGIPS = corDir / 'overlapping_residue_count_vs_GIPS.txt'
+    corOverlapResCountSemSim = corDir / 'overlapping_residue_count_vs_semetic_similarity.txt'
 
-    corOverlapResCountGIPS = aim2Dir / 'overlapping_residue_count_vs_genetic_GIPS.txt'
-    corOverlapResCountSemSim = aim2Dir / 'overlapping_residue_count_vs_semetic_similarity.txt'
+    if not corDir.exists():
+        os.makedirs(corDir)
 
-    if not aim2Dir.exists():
-        os.makedirs(aim2Dir)
+    if not degreeCountStrInt.is_file():
+        print('Counting PPI degree for genes in the structural interactome...')
+        count_degree_strInt(structuralInteractome, degreeCountStrInt)
 
     # correlation between overlapping residue count and genetic interaction profile similarity
     if not corOverlapResCountGIPS.is_file(): 
