@@ -1,0 +1,11 @@
+# SOFTWARE
+python3==3.11.2
+Modeller==10.4
+blastp==2.10.0+
+TM-align==20220412
+# LIBRARIES
+biopython==1.81
+networkx==3.0
+numpy==1.24.2
+pandas==1.5.3
+scipy==1.11.2
