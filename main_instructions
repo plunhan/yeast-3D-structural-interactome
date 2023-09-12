@@ -44,7 +44,7 @@ python3 process_reference_interactome.py
 # Step 11: Calculate Gene Ontology semantic similarity for pairs of proteins in the reference interactome
 python3 calculate_interactome_gosim.py
 
-# Step 11: BLAST interactome protein sequences against PDB SEQRES sequences
+# Step 12: BLAST interactome protein sequences against PDB SEQRES sequences
 cd ../data/processed/Yeast
 cp interactome_sequences.fasta ../
 cd ../
@@ -52,50 +52,50 @@ makeblastdb -in pdb_seqres_reduced.fasta -dbtype prot -out pdb_seqres_db
 blastp -db pdb_seqres_db -query interactome_sequences.fasta -out interactome_pdb_e-5 -evalue 1e-5
 cp interactome_pdb_e-5 /Yeast
 
-# Step 12: Produce template-annotated interactome
+# Step 13: Produce template-annotated interactome
 cd ../../code
 python3 produce_template_annotated_interactome.py
 
-# Step 13: Produce PPI template files for PPI homology modelling
+# Step 14: Produce PPI template files for PPI homology modelling
 python3 produce_ppi_template_files.py
 
-# Step 14: Blast again this time against PDB chain residues that have 3D coordinates
+# Step 15: Blast again this time against PDB chain residues that have 3D coordinates
 cd ../data/processed/Yeast/model_based
 makeblastdb -in ppi_template_sequences.fasta -dbtype prot -out ppi_template_seq_db
 blastp -db ppi_template_seq_db -query protein_sequences.fasta -out ppi_template_blast_alignments_e100 -evalue 100 -max_hsps 1 -num_alignments 1000
 
-# Step 15: Produce PPI alignment files for PPI homology modelling
+# Step 16: Produce PPI alignment files for PPI homology modelling
 cd ../../../../code
 python3 produce_ppi_alignment_files.py
 
-# Step 16: Produce PPI structural models
+# Step 17: Produce PPI structural models
 cd ../data/processed/HuRI/model_based
 mkdir ppi_models
 cd ppi_models
 /path/to/modeller/directory/bin/modpy.sh python3 ../../../../../code/produce_ppi_models.py
 
-# Step 17: Rename PPI structural model files
+# Step 18: Rename PPI structural model files
 cd ../../../../../code
 python3 rename_models.py
 
-# Step 18: Produce structural interactome
+# Step 19: Produce structural interactome
 python3 produce_structural_interactome.py
 
 # At this point, the structural interactome with mapped PPI interfaces can be found in the file /data/processed/Yeast/model_based/structural_interactome.txt
 # Below are instructions for data analysis
 
-# Step 19: Generate statistics for the structural interactome
+# Step 20: Generate statistics for the structural interactome
 cd ../code_analysis
 python3 generate_stats.py
 
-# Step 20: Generate correlation between interfacial overlap and genetic interaction profile similarity
+# Step 21: Generate correlation between interfacial overlap and genetic interaction profile similarity
 python3 generate_correlation.py
 
-# Step 21: Calculate GO semantic similarity
+# Step 22: Calculate GO semantic similarity
 python3 calculate_interactome_gosim.py
 
-# Step 22: Generate data for analyzing the effects of confounding factors
+# Step 23: Generate data for analyzing the effects of confounding factors
 python3 test_confounding_factors.py
 
-# Step 23: Plot statistics and figures
+# Step 24: Plot statistics and figures
 Rscript -e "rmarkdown::render('confounding_factors.Rmd')"
