@@ -84,8 +84,8 @@ def main():
     # parent directory of all processed data files
     procDir = dataDir / 'processed'
 
-    # directory of aim 2
-    aim2Dir = procDir / 'aim_2'
+    # directory of correlation
+    corDir = procDir / 'correlation'
 
     # directory of processed data files specific to interactome
     interactomeDir = procDir / interactome_name
@@ -103,7 +103,7 @@ def main():
     chainStrucResFile = modelBasedDir / 'ppi_chain_strucRes.pkl'
 
     # output data files
-    interactingResidues = aim2Dir / 'interacting_residues.pkl'
+    interactingResidues = corDir / 'interacting_residues.pkl'
     
     if not modelBasedDir.exists():
         os.makedirs(modelBasedDir)
