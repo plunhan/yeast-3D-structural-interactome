@@ -72,7 +72,7 @@ python3 produce_ppi_alignment_files.py
 cd ../data/processed/HuRI/model_based
 mkdir ppi_models
 cd ppi_models
-python2 ../../../../../code/produce_ppi_models.py
+/path/to/modeller/directory/bin/modpy.sh python3 ../../../../../code/produce_ppi_models.py
 
 # Step 17: Rename PPI structural model files
 cd ../../../../../code
