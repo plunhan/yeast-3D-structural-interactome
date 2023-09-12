@@ -92,7 +92,7 @@ python3 generate_correlation.py
 python3 calculate_interactome_gosim.py
 
 # Step 22: Generate data for analyzing the effects of confounding factors
-python3 interface_vs_functional.py
+python3 test_confounding_factors.py
 
 # Step 23: Plot statistics and figures
 Rscript -e "rmarkdown::render('confounding_factors.Rmd')"
