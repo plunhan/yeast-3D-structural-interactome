@@ -1,8 +1,13 @@
 # SOFTWARE
-python3==3.11.2
-Modeller==10.4
 blastp==2.10.0+
+fastsemsim==1.0.0
+Modeller==9.24
+python3==3.7.3
+python2==2.7.18
+R==3.5.2
+Rstudio==2022.07.1+554
 TM-align==20220412
+
 # LIBRARIES
 biopython==1.81
 networkx==3.0
