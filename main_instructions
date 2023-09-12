@@ -41,6 +41,9 @@ python3 process_external_data.py
 # Step 10: Process reference protein interactome
 python3 process_reference_interactome.py
 
+# Step 11: Calculate Gene Ontology semantic similarity for pairs of proteins in the reference interactome
+python3 calculate_interactome_gosim.py
+
 # Step 11: BLAST interactome protein sequences against PDB SEQRES sequences
 cd ../data/processed/Yeast
 cp interactome_sequences.fasta ../
