@@ -3,7 +3,6 @@ import re
 from pathlib import Path
 from sequence_similarity_tools import (get_interacting_residues_for_interactor, delete_file)
 import math
-import colorama
 from TMalign_tools import check_mapping_status_for_interface
 
 def calculate_structural_similarity(hub, 
@@ -289,13 +288,6 @@ def find_best_TM_score(hub,
     print('    TM-score for {} and {} is: '.format(protein_1, protein_2))
     print('         {}, {}, {}'.format(TMscore_50, TMscore_30, TMscore_10))
     return TMscore_50, TMscore_30, TMscore_10
-
-# def progress_bar(progress, total, color=colorama.Fore.YELLOW): 
-#     percent = 100 * (progress / float(total))
-#     bar = '█' * int(percent) + '-' * (100 - int(percent))
-#     print(color + f"\r|{bar}| {percent:.2f}%", end="\r")
-#     if progress == total: 
-#         print(colorama.Fore.GREEN + f"\r|{bar}| {percent:.2f}%", end="\r")
 
 def calculate_TM_score_local_extended(path_1, 
                                       pos_1, 
