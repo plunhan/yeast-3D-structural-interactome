@@ -1,3 +1,7 @@
+# This file provides all instructions for constructing the yeast structural interactome and subsequent analyses. 
+# All scripts run in Python 3 except for produce_ppi_models.py which runs in Python 2. 
+# Install all Python modules and software listed in the file “dependencies” before running the instructions below. 
+
 # Step 1: Create project directory
 mkdir structural_interactome
 
@@ -35,10 +39,8 @@ unzip Raw\ genetic\ interaction\ datasets:\ Pair-wise\ interaction\ format.zip
 rm Raw\ genetic\ interaction\ datasets:\ Pair-wise\ interaction\ format.zip
 
 # Step 9: Process data files from external sources
-cd ../../
-mkdir code
+cd ../../code
 cd code
-# Please put all scripts in the GitHub directory "build_structural_interactome" to the current local directory
 python3 process_external_data.py
 
 # Step 10: Process reference protein interactome
@@ -88,10 +90,7 @@ python3 produce_structural_interactome.py
 # Below are instructions for data analysis
 
 # Step 20: Generate statistics for the structural interactome
-cd ..
-mkdir code_analysis
-cd code_analysis
-# Please put all scripts in the GitHub directory "analysis" into the current local directory
+cd ../code_analysis
 python3 generate_stats.py
 
 # Step 21: Generate correlation between interfacial overlap and genetic interaction profile similarity
