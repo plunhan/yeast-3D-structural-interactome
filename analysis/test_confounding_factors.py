@@ -43,7 +43,7 @@ def main():
     # parent directory of all processed data files
     procDir = dataDir / 'processed'
 
-    # parent directory of Aim 2 results
+    # parent directory of correlation results
     corDir = procDir / 'correlation'
 
     # directory of processed data files specific to interactome
@@ -66,7 +66,6 @@ def main():
     protSeqDict = procDir / 'yeast_reference_sequences.pkl'
     structuralInteractome = modelBasedDir / 'structural_interactome.txt'
     structuralInteractomeWithInteractingResidues = corDir / 'interacting_residues.pkl'
-    degreeStrInt = corDir / 'degree_count_structural_interactome.txt'
     semanticSimilarity_mf = semSimDir / 'fastsemsim_output_refPPIs_mf_SimGIC'
     semanticSimilarity_bp = semSimDir / 'fastsemsim_output_refPPIs_bp_SimGIC'
     IDMappingFile = extDir / 'YEAST_559292_idmapping.dat'
@@ -75,6 +74,7 @@ def main():
     essentialGeneList = procDir / 'essential_genes.pkl'
 
     # output files
+    degreeStrInt = corDir / 'degree_count_structural_interactome.txt'
     degreeOverlapVsFunctionalSimilarity = corDir / 'interface_overlap_vs_functional_similarity.txt'
     querySeqTempFile = corDir / 'query_temp_seq.txt'
     subjectSeqTempFile = corDir / 'subject_temp_seq.txt'
@@ -95,6 +95,11 @@ def main():
     TempFile_2 = corDir / 'tempfile2.txt'
     TMalign_file = corDir / 'TMscore.txt'
 
+
+    if not degreeStrInt.is_file():
+        print('Counting PPI degree for genes in the structural interactome...')
+        count_degree_strInt(structuralInteractome, degreeStrInt)
+        
     # Probe the effect of possible confounding factors
 
     # Essentiality
