@@ -91,11 +91,8 @@ python3 generate_stats.py
 # Step 21: Generate correlation between interfacial overlap and genetic interaction profile similarity
 python3 generate_correlation.py
 
-# Step 22: Calculate GO semantic similarity
-python3 calculate_interactome_gosim.py
-
-# Step 23: Generate data for analyzing the effects of confounding factors
+# Step 22: Generate data for analyzing the effects of confounding factors
 python3 test_confounding_factors.py
 
-# Step 24: Plot statistics and figures
+# Step 23: Plot statistics and figures
 Rscript -e "rmarkdown::render('confounding_factors.Rmd')"
