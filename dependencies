@@ -4,8 +4,6 @@ fastsemsim==1.0.0
 Modeller==9.24
 python2==2.7.18
 python3==3.7.3
-R==3.5.2
-Rstudio==2022.07.1+554
 TM-align==20220412
 iAlign==1.1b2
 
